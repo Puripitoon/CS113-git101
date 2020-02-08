@@ -1,0 +1,27 @@
+#week4
+#Functions and Program Structure ตอนที่ 1
+1.การนิยามฟังก์ชัน
+    - รูปแบบของการนิยาม
+    return-value-type function-name( parameter-list )
+    {
+        declarations
+        statement
+        statement
+        :
+    }
+2.Function Prototypes
+    - รูปแบบของfunction
+        int odd(int);
+3.Standard Library Functions and Math Library Functions
+    - คือชุดคำสั่ง แแก่อนจะใช้คำสั่งบางคำสั่งได้ต้องเพิ่มชุดคำสั่งก่อน เช่นก่อนจะใช้ printf printf, scanf และ getchar
+    ต้องเพิ่มชุดคำสั่งเข้าไปก่อน โดย #include <stdio.h>
+    - แต่ถ้าจะใช้เกี่ยวกับคณิตศาสตร์จะต้องใช้ #include <math.h> จึงจะสามารถใช้ฟฟังก์ชัน
+    sin(), cos(), sqrt(), log(), pow(), exp(),floor(), ceil(), fmod() ได้
+4.return values
+    - ฟังก์ชัน return type เป็น void
+    - เราใช้ void เพื่อบอกว่าฟังก์ชันนี้ไม่มีการreturnค่ากลับมายังผู้เรียก
+    - ถ้าฟังก์ชันทีมีการreturn ค่า ให้ใช้ คีย์เวิร์ด return เพื่อคืนค่ากลับ
+5.Using Functions as Parameters to Functions
+    -คือการที่ return ค่าของฟังก์ชันไปเป็น parameter ของอีกfunction
+6.Recursion
+    - ฟังก์ชันที่เรียกใช้ฟังก์ชั้นตัวเอง
