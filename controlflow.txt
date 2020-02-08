@@ -1,0 +1,43 @@
+# week3
+# control flow
+1.Statements and Blocks
+    - expression กลายเป็น statement เมื่อมี ; ปิดท้าย
+    - {} ใช้รวม statement ให้เป็น Blocks
+2.if-else
+    if (expression)
+        statement1
+    else 
+        statement2
+3.else-if
+    if (expression1)
+        statement1
+    else if (expression2)
+        statement2
+    else
+        statement3
+4.switch
+    -คล้ายกับการใช้ if else
+    switch (expression) {
+    case const-expr:
+        statements
+    case const-expr:
+        statements
+    default:
+        statements
+    }
+5.loops while และ for
+    5.1 while
+        while (expression)
+            statement
+        ปล.ถ้า expression เป็นจริง loop ถึงจะทำงาน
+    5.2 for 
+        for (ค่าเริ่มต้น ; เงื่อนไข ; ขยับทีละเท่าไหร่)
+            statement
+6.loops do-while
+    do {
+        statement
+    } while (expression);
+    -จะทำ statement ก่อนแล้วึงเช็คเงื่อนไขในwhile ว่าต้องเข้าloopหรือไม่ 
+7.break และ continue
+    break จะใช้เพื่อให้หลุดจาก loop 
+    continue จะใช้เพื่อบังคับการทำงานให้วนloop ซ้ำ
