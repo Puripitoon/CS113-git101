@@ -1,0 +1,21 @@
+﻿#week4
+#Functions and Program Structure - ตอนที่2
+1.ขอบเขตและช่วงของตัวแปร
+    1.1local variables
+        - ตัวแปรที่ประกาศใน block 
+    1.2Global Variables
+        - ตัวแปรที่ประกาศเป็นค่ากลางทุกฟังก์ชันเรียกใช้ได้
+    1.3Storage Classes
+        -มี 4 ลักษณะ auto,register, extern, และ static
+2.Separate Compilation 
+    - การใช้ฟังก์ชันไม่จำเ็นต้องคอมไพล์ในเวลาเดียวกัน
+    - คอมไพล์โดยการใช้คำสั่ง gcc ชื่อไฟล์
+3.make
+    - ไฟล์ Makefile จะบรรจุกฎต่างๆ ที่ใช้ในการสร้าง
+4.การสร้าง Static Library
+    - gcc -c func.c
+      ar cr libfunc.a func.o
+5.การเรียกใช้ฟังก์ชันใน Shared Library ของภาษา C จาก Python
+    - from ctypes import cdll
+      c_lib = cdll.LoadLibrary("libfunc.dll")
+      c_lib.c_function(123)
