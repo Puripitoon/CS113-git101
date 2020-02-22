@@ -1,0 +1,126 @@
+# week9
+# git
+การสร้าง/แยก Branch
+* คำสั่งสำหรับการสร้าง Branch 
+	git branch <branch-name>
+   เช่น สร้าง Branch ชื่อ test จะต้องพิมพ์ว่า
+	git branch test
+   การสร้าง Branch ที่แยกออกจาก Branch เดิม คือการแยกส่วนที่จะนำมาทำงานออกจาก branch เดิม 
+* วิธีตรวจสอบว่าขณะนี้ทำงานอยู่ที่ Branch ไหนโดยการใช้คำสั่งว่า 
+    git branch และจะเห็นว่ามี branch ขึ้นมา จะเห็นว่ามี * อยู่นำหน้าชื่อ Branch ที่กำลังทำงานอยู่ขณะนั้น
+* วิธีเปลี่ยน branch 
+    git checkout <branch-name> เช่น git checkout test
+
+*********************************************************************************************
+การ Merge Branch แบบไม่มี Conflict(กำหนดให้ มีไฟล์ a.txt และ b.txt และทำงานอยู่ที่ branch master และ test)
+1. เพิ่มไฟล์ a.txt ใน test branch test และเพิ่มไฟล์ b.txt ใน branch master  
+    - git checkout test เพิ่มให้ทำงานที่ Branch test
+        เพิ่มไฟล์ a.txt
+    -git checkout master เพิ่มให้ทำงานที่ Branch master
+        เพิ่มไฟล์ b.txt
+2. วิธีดู Checkpoint ทั้งหมด ด้วยคำสั่ง git log adog
+    git log --all --decorate --oneline --graph
+3. push master ขึ้น github  ใช้ git log adog ดู Checkpoint ทั้งหมด สังเกตสิ่งที่เปลี่ยนแปลง
+    git checkout master
+	git log --all --decorate --oneline --graph
+	git push origin master
+    git log --all --decorate --oneline --graph
+4. push test ขึ้น github ใช้ git log adog ดู Checkpoint ทั้งหมด สังเกตสิ่งที่เปลี่ยนแปลง
+	git checkout feature
+	git log --all --decorate --oneline --graph
+	git push origin feature
+ 	git log --all --decorate --oneline --graph
+5. การ merge โดยนำข้อมูลใน test ไปรวมกันกับข้อมูลของ master
+    5.1 git checkout master
+    5.2 git merge test
+6. เมื่อไม่มี conflict จะทำให้ git สร้าง commit ของการ merge นั้นไปเลย 
+    ดังนั้น เราจะต้องใส่ commit message ด้วย vi ถ้าใช้ default merge commit message ให้กด ESC 
+    แล้วพิมพ์ :wq! แล้วกด Enter
+7. merge แล้วจะเห็นได้ว่า จะมี b.txt และ a.txt อยู่ใน Branch master เดียวกัน
+8. และก็ push master ขึ้น github 
+    - git push origin master
+
+...............................................................................................
+การ Pull แบบไม่มี Conflict
+1. เพิ่มไฟล์ newa.txt ใน directory ใหม่ แล้ว push ไปที่ github
+    git add newa.txt
+    git commit -m "add newa.txt by user2"(คำอธิบายตั้งเองได้)
+    git push origin master
+2. กลับมาที่เครื่องเก่า แล้ว pull การเปลี่ยนแปลงลงมาที่ local repository
+    cd....                      (ที่ไฟล์งานเก่าอยู่)
+    git pull origin master		(ดึงการเปลี่ยนแปลงจาก branch master)
+	ls -l						(มีไฟล์ newa.txt)
+
+.................................................................................................
+การ Merge แบบมี Conflict
+* conflict คือ ความขัดแย้ง ที่เกิดจากการปรับแก้ไขข้อมูลของไฟล์เดิม บรรทัดเดิม ที่อยู่ต่างbranch
+เมื่อนำมา merge แล้ว git ไม่สามมารถเลือกได้ว่าจะใช้ขอมูลจากไฟล์ไหนดี
+1. สร้าง branch test2และ checkout ที่ branch นั้นด้วย
+    git checkout -b test2 (สร้างและสลับ branch พร้อมกัน)
+2. แก้ไชไฟล์ b.txt ใน  branch test2 และ master ในบรรทัดเดียวกัน ให้มีข้อความต่างกัน
+   แก้ขอมูลใน test2
+   git checkout test2
+	  แก้ไขไฟล์ b.txt บรรทัดแรก ให้มีข้อความหนึ่ง
+	git status     
+	git add b.txt
+	git commit -m "update b.txt first line in branch feature2"
+	git log --all --decorate --oneline --graph
+   แก้ขอมูลใน master 
+    git checkout master
+      แก้ไขไฟล์ b.txt บรรทัดแรก ให้มีข้อความสองที่แตกต่างจากข้อความหนึ่ง
+	git status
+	git add b.txt
+	git commit -m "update b.txt first line in branch master"
+	git log --all --decorate --oneline --graph
+3. merge branch test2 เข้าไปใน branch master (ไม่ต้อง push ก็ merge ได้)
+	git checkout master
+	git merge test2
+       จะไม่สามารถ merge ได้จะมีข้อความว่าเกิด conflict ขึ้น
+4. เปิดไฟล์ b.txt ใน master จะมีคำอธิบายว่าทำไมเกิด conflict
+    หาก Editor มี tool ที่ช่วยจัดการ conflict 
+    หาก Editor ไม่มี tool ช่วย จะต้องแก้ไขด้วยตัวเอง
+5. หลังจากแก้ไขแล้วให้ commit การ merge
+    git add b.txt
+	git status
+	git commit -m "merge branch 'test2' and resolve conflict" (ตั้งเองได้)
+	git log --all --decorate --oneline --graph
+6. push ขึ้น github
+	git push origin master
+    git log --all --decorate --oneline --graph เพื่อเช็คดูว่าสำเร็จแล้ว
+
+.........................................................................................
+การ Pull แบบมี Conflict
+1. ในเครื่องใหม่ หรือ folder ใหม่ ให้แก้ข้อมูลใน newa.txt แล้วcommit และ push ไปที่ github
+	(กำหนดให้ กำหนดfolder ใหม่ชื่อ git102)
+    cd .....git102
+	git pull origin master
+	  แก้ไขไฟล์ newa.txt ใน git102
+	    git add newa.txt
+	    git status
+        git commit -m "update newa.txt by user2"
+	    git log --all --decorate --oneline --graph
+	    git push origin master
+        git log --all --decorate --oneline --graph
+2. ในเครื่องเก่า หรือ folder เก่า ให้แก้ไขข้อมูลใน newa.txt ในจุดเดิมที่เเก้ไขแล้ว commit
+	cd ....โฟเดอร์เก่า
+	…  แก้ไขไฟล์ newa.txt บรรทัดเดิม
+    git add newa.txt
+	git status
+	git commit -m "update newa.txt too"
+	git log --all --decorate --oneline --graph (ดู Checkpoint)
+3. ก่อน Push ให้ Pull origin/master จะได้ว่ามี conflict เกิดขึ้น
+    ให้แก้ไข conflict ก่อนจากนั้น commit แล้ว push ไปที่ github
+    git pull origin master
+    git status เช็คดู
+	  แก้ไข conflict ในไฟล์ newa.txt
+	git add newa.txt
+	git commit -m "merge and resolve conflict in newa.txt"
+	git log --all --decorate --oneline --graph
+	git push origin master (push ไปที่ github)
+4. ที่เครื่องใหม่ หรือ folder ใหม่ จะเห็นว่า Checkpoint ตามหลัง origin/master อยู่
+	cd ....git102
+	git log --all --decorate --oneline --graph
+       ให้ pull ลงมา สังเกตว่า ไม่เกิด conflict เพราะไม่มีการแก้ไขอะไรเพิ่มเติม
+	git pull origin master
+    git log --all --decorate --oneline --graph
+.............................................................................................
